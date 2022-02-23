@@ -2,7 +2,7 @@
 name = "pdf-link-checker"
 version = "1.1.0"
 description = ""
-authors = ["Matt Briggs"]
+authors = ["Matt Briggs <mabrigg@microsoft.com>"]
 maintainers = ["Patrick Stöckle <patrick.stoeckle@tum.de>"]
 readme = "README.md"
 license = "MIT"
