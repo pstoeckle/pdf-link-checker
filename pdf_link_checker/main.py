@@ -4,10 +4,10 @@ Main.
 from csv import writer
 from logging import INFO, basicConfig, getLogger
 from pathlib import Path
-from typing import AbstractSet, List
+from typing import List
 
-from pdf_link_check import check_pdf_links
 from pdf_link_checker import __version__
+from pdf_link_checker.pdf_link_check import check_pdf_links
 from pdf_link_checker.utils import error_echo
 from typer import Exit, Option, Typer, echo
 
