@@ -9,7 +9,7 @@ from logging import getLogger
 from operator import itemgetter
 from pathlib import Path
 from threading import Thread
-from typing import Any, Sequence
+from typing import Any, MutableMapping, Sequence, Tuple, MutableSet
 
 from requests import get
 
@@ -53,6 +53,7 @@ def get_links_from_page(indexstart, indexend, reportlist, pdf):
             - Record the page number, URI, and response code result or NA for
               timeouts.
     """
+    checked_urls: MutableSet[str] = set()
 
     for i in tqdm(range(indexstart, indexend)):
         page_obj = pdf.getPage(i)
@@ -68,6 +69,9 @@ def get_links_from_page(indexstart, indexend, reportlist, pdf):
                         if raw_url.strip().casefold().startswith("mailto:"):
                             _LOGGER.info(f"Ignoring email address {raw_url}")
                             continue
+                        if raw_url.strip().casefold() in checked_urls:
+                            _LOGGER.info(f"We already checked {raw_url}")
+                            continue
                         try:
                             x = get(raw_url, timeout=5, stream=True)
                             code = x.status_code
@@ -79,6 +83,7 @@ def get_links_from_page(indexstart, indexend, reportlist, pdf):
                             request_error = str(e)
                         _LOGGER.info(f"{page_no} : {raw_url} : {code}")
                         record = [page_no, raw_url, code, request_error]
+                        checked_urls.add(raw_url.strip().casefold())
                         reportlist.append(record)
         except KeyError:
             _LOGGER.info(f"no annotations on page {page_no}")
