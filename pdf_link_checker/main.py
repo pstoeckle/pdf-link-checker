@@ -98,11 +98,11 @@ def check_links(
     if ci_mode:
         error_entries = [line for line in link_report[1:] if line[2] != 200]
         real_error_entries = [
-            line for line in error_entries if line[1].casefold() not in ignored_urls_set
+            line for line in error_entries if line[1].strip().casefold() not in ignored_urls_set
         ]
         if len(real_error_entries) > 0:
             error_echo(f"We found {len(real_error_entries)} broken URLs.")
-            Exit(1)
+            raise Exit(1)
 
 
 if __name__ == "__main__":

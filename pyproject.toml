@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pdf-link-checker"
-version = "1.1.1"
+version = "1.1.2"
 description = ""
 authors = ["Matt Briggs <mabrigg@microsoft.com>"]
 maintainers = ["Patrick Stöckle <patrick.stoeckle@tum.de>"]
