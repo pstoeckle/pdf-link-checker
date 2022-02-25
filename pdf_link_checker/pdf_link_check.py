@@ -6,19 +6,27 @@
     Release V1.1.1 2020.1.23
 """
 from logging import getLogger
-from operator import itemgetter
 from pathlib import Path
 from threading import Thread
-from typing import Any, MutableMapping, Sequence, Tuple, MutableSet
+from typing import (
+    List,
+    MutableSequence,
+    MutableSet,
+    Sequence,
+    Tuple, Union,
+)
 
-from requests import get
-
-from pdf_link_checker.utils import error_echo
 from PyPDF2 import PdfFileReader
+from requests import get
 from tqdm import tqdm
+
+from pdf_link_checker.record import Record
+from pdf_link_checker.utils import error_echo
+
 _LOGGER = getLogger(__name__)
 
-def get_split(numtosplit):
+
+def get_split(numtosplit: int) -> Sequence[Tuple[int, int]]:
     """Split a number into four equal(ish) sections. Number of pages must be greater
     than 13."""
     if numtosplit > 13:
@@ -45,7 +53,12 @@ def get_split(numtosplit):
     raise ValueError("Number too small to split into four sections.")
 
 
-def get_links_from_page(indexstart, indexend, reportlist, pdf):
+def get_links_from_page(
+    indexstart: int,
+    indexend: int,
+    reportlist: MutableSequence[Record],
+    pdf: PdfFileReader,
+) -> Sequence[Record]:
     """- Extract pages from the PDF using the incoming range.
     - For each page, find annotations, and URIs in the annotations.
         - Get the URIs.
@@ -72,6 +85,7 @@ def get_links_from_page(indexstart, indexend, reportlist, pdf):
                         if raw_url.strip().casefold() in checked_urls:
                             _LOGGER.info(f"We already checked {raw_url}")
                             continue
+                        code: Union[str, int]
                         try:
                             x = get(raw_url, timeout=5, stream=True)
                             code = x.status_code
@@ -82,22 +96,28 @@ def get_links_from_page(indexstart, indexend, reportlist, pdf):
                             code = "NA"
                             request_error = str(e)
                         _LOGGER.info(f"{page_no} : {raw_url} : {code}")
-                        record = [page_no, raw_url, code, request_error]
                         checked_urls.add(raw_url.strip().casefold())
-                        reportlist.append(record)
+                        reportlist.append(
+                            Record(
+                                url=raw_url,
+                                code=code,
+                                request_error=request_error,
+                                page_no=page_no,
+                            )
+                        )
         except KeyError:
             _LOGGER.info(f"no annotations on page {page_no}")
     return reportlist
 
 
-def check_pdf_links(infilepath: Path) -> Sequence[Any]:
+def check_pdf_links(infilepath: Path) -> Sequence[Record]:
     """- Get the number of pages, and split into four equal sections
      - Get the range for each section, and send each section range to the parser
     running its own thread.
      - return a list of lists [[]] with report data."""
     pdf = PdfFileReader(str(infilepath))
     pages = pdf.numPages
-    link_report = []
+    link_report: List[Record] = []
     if pages < 13:
         get_links_from_page(0, pages, link_report, pdf)
     else:
@@ -110,7 +130,7 @@ def check_pdf_links(infilepath: Path) -> Sequence[Any]:
             )
             th.start()
             threads.append(th)
-        [th.join() for th in threads]
-    link_report.sort(key=itemgetter(0))
-    link_report.insert(0, ["page", "uri", "status", "request-error"])
+        for th in threads:
+            th.join()
+    link_report.sort()
     return link_report

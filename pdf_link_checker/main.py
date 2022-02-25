@@ -1,7 +1,8 @@
 """
 Main.
 """
-from csv import writer
+from csv import DictWriter
+from dataclasses import asdict
 from logging import INFO, basicConfig, getLogger
 from pathlib import Path
 from typing import List
@@ -80,6 +81,9 @@ def check_links(
         is_flag=True,
         help="If set, the command will exit with an error code if there are broken URLs.",
     ),
+    csv_delimiter: str = Option(
+        ";", "--csv-delimiter", "-c", help="The CSV delimiter, e.g., `;`"
+    ),
 ) -> None:
     """
     - Get input PDF and output CSV location.
@@ -91,14 +95,23 @@ def check_links(
     link_report = check_pdf_links(pdf_file)
 
     echo(f"Done: {report_out}")
-    with report_out.open("w", newline="") as csvout:
-        csvwrite = writer(csvout)
+
+    with report_out.open("w") as csvout:
+        csvwrite = DictWriter(
+            csvout,
+            delimiter=csv_delimiter,
+            fieldnames=["page_no", "url", "code", "request_error"],
+        )
+        csvwrite.writeheader()
         for r in link_report:
-            csvwrite.writerow(r)
+            csvwrite.writerow(asdict(r))
+
     if ci_mode:
-        error_entries = [line for line in link_report[1:] if line[2] != 200]
+        error_entries = [line for line in link_report if line.code != 200]
         real_error_entries = [
-            line for line in error_entries if line[1].strip().casefold() not in ignored_urls_set
+            line
+            for line in error_entries
+            if line.url.strip().casefold() not in ignored_urls_set
         ]
         if len(real_error_entries) > 0:
             error_echo(f"We found {len(real_error_entries)} broken URLs.")
