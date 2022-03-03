@@ -10,6 +10,7 @@ from typing import List
 from pdf_link_checker import __version__
 from pdf_link_checker.pdf_link_check import check_pdf_links
 from pdf_link_checker.utils import error_echo
+from PyPDF2 import PdfFileReader
 from typer import Exit, Option, Typer, echo
 
 _LOGGER = getLogger(__name__)
@@ -49,17 +50,20 @@ def _call_back(
     """
 
 
+_PDF_FILE_OPTION = Option(
+    None,
+    "--pdf-file",
+    "-p",
+    exists=True,
+    resolve_path=True,
+    dir_okay=False,
+    help="The PDF file to check.",
+)
+
+
 @app.command()
 def check_links(
-    pdf_file: Path = Option(
-        None,
-        "--pdf-file",
-        "-p",
-        exists=True,
-        resolve_path=True,
-        dir_okay=False,
-        help="The PDF file to check.",
-    ),
+    pdf_file: Path = _PDF_FILE_OPTION,
     report_out: Path = Option(
         "report.csv",
         "--report",
@@ -116,6 +120,26 @@ def check_links(
         if len(real_error_entries) > 0:
             error_echo(f"We found {len(real_error_entries)} broken URLs.")
             raise Exit(1)
+
+
+@app.command()
+def check_page_limit(
+    pdf_file: Path = _PDF_FILE_OPTION,
+    limit: int = Option(None, "--page-limit", "-l", help="The maximal number of pages"),
+) -> None:
+    """
+    Check the page limit.
+    """
+
+    with pdf_file.open("rb") as f:
+        readpdf = PdfFileReader(f)
+        num_pages = readpdf.numPages
+    _LOGGER.info(f"{pdf_file} has {num_pages} pages.")
+    if limit < num_pages:
+        error_echo(f"The page limit are {limit} pages, but we have {num_pages}")
+        raise Exit(1)
+    else:
+        echo("The PDF is within the page limit.")
 
 
 if __name__ == "__main__":
