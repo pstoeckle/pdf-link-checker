@@ -11,7 +11,7 @@ from pdf_link_checker import __version__
 from pdf_link_checker.pdf_link_check import check_pdf_links
 from pdf_link_checker.utils import error_echo
 from PyPDF2 import PdfFileReader
-from typer import Exit, Option, Typer, echo
+from typer import Exit, Option, Typer, echo, Argument
 
 _LOGGER = getLogger(__name__)
 basicConfig(
@@ -50,10 +50,8 @@ def _call_back(
     """
 
 
-_PDF_FILE_OPTION = Option(
+_PDF_FILE_OPTION = Argument(
     None,
-    "--pdf-file",
-    "-p",
     exists=True,
     resolve_path=True,
     dir_okay=False,
