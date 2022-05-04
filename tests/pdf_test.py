@@ -26,7 +26,6 @@ class PDFTest(TestCase):
             app,
             [
                 "check-links",
-                "--pdf-file",
                 str(Path("tests", "data", "pdflink.pdf")),
                 "--ci",
             ],
@@ -41,7 +40,6 @@ class PDFTest(TestCase):
             app,
             [
                 "check-links",
-                "--pdf-file",
                 str(Path("tests", "data", "pdflink.pdf")),
                 "--ci",
                 "-I",
