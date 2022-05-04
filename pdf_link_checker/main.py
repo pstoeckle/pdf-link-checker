@@ -11,7 +11,7 @@ from pdf_link_checker import __version__
 from pdf_link_checker.pdf_link_check import check_pdf_links
 from pdf_link_checker.utils import error_echo
 from PyPDF2 import PdfFileReader
-from typer import Exit, Option, Typer, echo
+from typer import Exit, Option, Typer, echo, Argument
 
 _LOGGER = getLogger(__name__)
 basicConfig(
@@ -50,10 +50,8 @@ def _call_back(
     """
 
 
-_PDF_FILE_OPTION = Option(
+_PDF_FILE_OPTION = Argument(
     None,
-    "--pdf-file",
-    "-p",
     exists=True,
     resolve_path=True,
     dir_okay=False,
@@ -88,6 +86,13 @@ def check_links(
     csv_delimiter: str = Option(
         ";", "--csv-delimiter", "-c", help="The CSV delimiter, e.g., `;`"
     ),
+    ignore_unauthorized: bool = Option(
+            False,
+            "--ignore-unauthorized",
+            "-A",
+            is_flag=True,
+            help="If this flag is set, we will ignore 403 status codes. Some websites block scripts, and thus existing links will result in 403 codes."
+    )
 ) -> None:
     """
     - Get input PDF and output CSV location.
@@ -111,7 +116,7 @@ def check_links(
             csvwrite.writerow(asdict(r))
 
     if ci_mode:
-        error_entries = [line for line in link_report if line.code != 200]
+        error_entries = [line for line in link_report if not ((line.code == 403 and ignore_unauthorized) or line.code == 200)]
         real_error_entries = [
             line
             for line in error_entries
