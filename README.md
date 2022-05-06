@@ -1,75 +1,99 @@
-# PDF Link Check (Python script)
+# PDF Link Check
 
-`pdf_link_check.py` checks the hyperlinks in a Portable Document Format (PDF) file. The script is a command line app.
-
-Release: V1.1.1 2020.1.23
+[[_TOC_]]
 
 
-## Install dependencies
+Stituation: You need to upload a PDF somewhere
 
-You can either install the dependencies for this script by using PIP and the requirements file or installing each individual dependent module.
+-  a submission to [EasyChair](https://easychair.org/cfp/)
+- a preprint to [arxiv](https://arxiv.org/)
+- a slide deck to [moodle](https://www.moodle.tum.de/)
 
-### To use Pip
+Now, you want to check if all the links are still active and that a the reviewers, reader, or students end up with `404` error codes.
+Let this script check that for you!
 
-1. Navigate your CLI to the folder containing the repository with the `requirements.txt` file.
-2. Run the following command:
+## Setup
+
+1. Install [Python](https://www.python.org/downloads/)
+2. Install the `pdf-link-checker` via the GitLab Python Package Registry.
+
     ```bash
-    pip install -r requirements.txt
+    pip install pdf-link-checker --extra-index-url https://i4-student:zYyCuhx15tShf5EhRKyo@gitlab.lrz.de/api/v4/projects/102646/packages/pypi/simple
     ```
 
-### Install individual modules
+    **Attention**: On macOS, `pip` is usually the installer of the Python2 instance.
+    Please use `pip3` or `pip3.x` in this case.
 
-The script requires the following dependencies:
+3. Now you should be able to call `pdf-link-checker` within your shell.
 
-- [Python 3.6 or greater](https://www.python.org/downloads/).
-- Python module: PyPDF2.
+    ```bash
+    $ pdf-link-checker --version
+    pdf-link-checker 1.1.5
+    ```
 
-    Install with PIP: `pip install PyPDF2`
+## Usage
 
-    For more information, see [pypi.org](https://pypi.org/project/PyPDF2/).
+### Check Links
 
-- Python module: Requests
+```bash
+$ pdf-link-checker check-links --help
+Usage: pdf-link-checker check-links [OPTIONS] [PDF_FILE]
 
-    Install with PIP: `pip install requests`.
+  - Get input PDF and output CSV location. - execute
+  check_pdf_links(infilepath, infilepath) - Save the report to output CSV
+  location.
 
-    For more information, see [pypi.org](https://pypi.org/project/requests/).
+Arguments:
+  [PDF_FILE]  The PDF file to check.
 
-- Python module: CSV
+Options:
+  -r, --report FILE          The CSV file with all the checked links.
+                             [default: report.csv]
 
-    Part of the Python core packages. No need to install with PIP. CSV stands for comma separated value.
+  -I, --ignore-url TEXT      URL that should not be checked, e.g., because we
+                             now that they are not activated yet.  [default: ]
 
-    For more information, see [CSV File Reading and Writing](https://docs.python.org/3/library/csv.html)
+  -C, --ci                   If set, the command will exit with an error code
+                             if there are broken URLs.  [default: False]
 
-- Python module: operator
+  -c, --csv-delimiter TEXT   The CSV delimiter, e.g., `;`  [default: ;]
+  -A, --ignore-unauthorized  If this flag is set, we will ignore 403 status
+                             codes. Some websites block scripts, and thus
+                             existing links will result in 403 codes.
+                             [default: False]
 
-    Part of the Python core packages. No need to install with PIP.
+  --help                     Show this message and exit.
+```
 
-    For more information, see [operator](https://docs.python.org/3/library/operator.html#module-operator)
+### Check Page Limit
 
-- Python module: Threading
+```bash
+$ pdf-link-checker check-page-limit --help
+Usage: pdf-link-checker check-page-limit [OPTIONS] [PDF_FILE]
 
-    Part of the Python core packages. No need to install with PIP.
+  Check the page limit.
 
-    For more information, see [threading — Thread-based parallelism](https://docs.python.org/3.6/library/threading.html)
+Arguments:
+  [PDF_FILE]  The PDF file to check.
 
+Options:
+  -l, --page-limit INTEGER  The maximal number of pages
+  --help                    Show this message and exit.
+```
 
-## Use `pdf_link_check.py`
+#### Example
 
-Run `pdf_link_check.py` from your command line:
-
-1. Open your command line and run: `python <path to script>/pdf_link_check.py`
-2. The script will ask for the path of the PDF you would like to parse. Enter the absolute path name.<br>On a Windows 10 machine, this might look like: `c:\<pathtoyourpdf>/pdffile.pdf`
-3. The script will ask for a location and filename where you would like to save the output.<br>On a Windows 10 machine, this might look like: `c:\<pathtoyourreport>/pdflinkreport.csv`
-4. The script will run. The script displays in the terminal:
-    - PDF page number
-    - URI checked
-    - Response code. You can find more information about response codes at [List of HTTP status codes](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes).
-    - Error information for requests that fail. These are the exceptions raised by the **[Requests module](https://2.python-requests.org/en/master/)**. 
-
-    The script will produce an "NA" rather than a response code for URIs that timeout after five seconds. The script will display the capture and display the error code in the terminal.
-
-5. When the script is done, it saves the result to the pathname that you indicated. You can open the CSV in Microsoft Excel.
+```bash
+$ pdf-link-checker check-links main.pdf
+Starting
+100%|█████████| 5/5 [00:30<00:00,  6.18s/it]
+Done: .../report.csv
+```
 
 ## Run Pytest to validate returns
 
 From the script directory, run `pytest` to validate the code. The tests use the PDFs in the **data** folder.
+
+## Contact
+
+If you have any question, please contact [Patrick Stöckle](mailto:patrick.stoeckle@tum.de?subject=GitLab%3A%20PDF-Link-Checker&body=Hi%2C%0AI%20have%20the%20following%20question%20regarding%20the%20pdf-link-checker%20library%3A).
