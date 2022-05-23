@@ -11,7 +11,7 @@ from pdf_link_checker import __version__
 from pdf_link_checker.pdf_link_check import check_pdf_links
 from pdf_link_checker.utils import error_echo
 from PyPDF2 import PdfFileReader
-from typer import Exit, Option, Typer, echo, Argument
+from typer import Argument, Exit, Option, Typer, echo
 
 _LOGGER = getLogger(__name__)
 basicConfig(
@@ -87,12 +87,19 @@ def check_links(
         ";", "--csv-delimiter", "-c", help="The CSV delimiter, e.g., `;`"
     ),
     ignore_unauthorized: bool = Option(
-            False,
-            "--ignore-unauthorized",
-            "-A",
-            is_flag=True,
-            help="If this flag is set, we will ignore 403 status codes. Some websites block scripts, and thus existing links will result in 403 codes."
-    )
+        False,
+        "--ignore-unauthorized",
+        "-A",
+        is_flag=True,
+        help="If this flag is set, we will ignore 403 status codes. Some websites block scripts, and thus existing links will result in 403 codes.",
+    ),
+    only_errors: bool = Option(
+        False,
+        "--only-errors",
+        "-O",
+        is_flag=True,
+        help="If this flag is set, the script will only write non 200 lines in the report.",
+    ),
 ) -> None:
     """
     - Get input PDF and output CSV location.
@@ -113,10 +120,17 @@ def check_links(
         )
         csvwrite.writeheader()
         for r in link_report:
-            csvwrite.writerow(asdict(r))
+            if only_errors and r.code == 200:
+                _LOGGER.info(f"Skip {r}")
+            else:
+                csvwrite.writerow(asdict(r))
 
     if ci_mode:
-        error_entries = [line for line in link_report if not ((line.code == 403 and ignore_unauthorized) or line.code == 200)]
+        error_entries = [
+            line
+            for line in link_report
+            if not ((line.code == 403 and ignore_unauthorized) or line.code == 200)
+        ]
         real_error_entries = [
             line
             for line in error_entries
