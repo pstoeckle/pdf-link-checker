@@ -5,7 +5,9 @@ from csv import DictWriter
 from dataclasses import asdict
 from logging import INFO, basicConfig, getLogger
 from pathlib import Path
-from typing import List
+from re import IGNORECASE, MULTILINE
+from re import compile as re_compile
+from typing import List, Optional
 
 from pdf_link_checker import __version__
 from pdf_link_checker.pdf_link_check import check_pdf_links
@@ -21,6 +23,9 @@ basicConfig(
     filename="pdf-link-checker.log",
     filemode="w",
 )
+
+
+_REFERENCES = re_compile(r"\n\s*References\s*\n", IGNORECASE | MULTILINE)
 
 
 def _version_callback(value: bool) -> None:
@@ -145,20 +150,45 @@ def check_links(
 def check_page_limit(
     pdf_file: Path = _PDF_FILE_OPTION,
     limit: int = Option(None, "--page-limit", "-l", help="The maximal number of pages"),
+    content_limit: Optional[int] = Option(
+        None,
+        "--content-limit",
+        "-c",
+        help="The maximal number of content pages. If this parameter is passed, we will not only the absolute length of the document but also the length without references etc.",
+    ),
 ) -> None:
     """
     Check the page limit.
     """
-
+    references_start_at_page: int = -1
     with pdf_file.open("rb") as f:
         readpdf = PdfFileReader(f)
-        num_pages = readpdf.numPages
+        num_pages = len(readpdf.pages)
+        for i, page in enumerate(readpdf.pages):
+            text = page.extract_text()
+            _LOGGER.debug(f"On page {i}:")
+            _LOGGER.debug(text)
+            if _REFERENCES.search(text) is not None:
+                references_start_at_page = i + 1
+                break
     _LOGGER.info(f"{pdf_file} has {num_pages} pages.")
     if limit < num_pages:
         error_echo(f"The page limit are {limit} pages, but we have {num_pages}")
         raise Exit(1)
     else:
         echo("The PDF is within the page limit.")
+
+    if content_limit is not None:
+        if references_start_at_page == -1:
+            error_echo("We could not determine where the references start...")
+            raise Exit(1)
+        elif references_start_at_page - 1 <= content_limit:
+            echo("The PDF is within the content limit.")
+        else:
+            error_echo(
+                f"The content page limit are {content_limit} pages, but we have {references_start_at_page -1 }"
+            )
+            raise Exit(1)
 
 
 if __name__ == "__main__":

@@ -1,0 +1,121 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="JsonDuplicatePropertyKeys" enabled="true" level="ERROR" enabled_by_default="true" />
+    <inspection_tool class="PyAbstractClassInspection" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="PyArgumentEqualDefaultInspection" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="PyAssignmentToLoopOrWithParameterInspection" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="PyAttributeOutsideInitInspection" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="PyAugmentAssignmentInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true" />
+    <inspection_tool class="PyBroadExceptionInspection" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="PyCallByClassInspection" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="PyCallingNonCallableInspection" enabled="true" level="ERROR" enabled_by_default="true" />
+    <inspection_tool class="PyChainedComparisonsInspection" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="PyClassHasNoInitInspection" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="PyComparisonWithNoneInspection" enabled="true" level="ERROR" enabled_by_default="true" />
+    <inspection_tool class="PyCompatibilityInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ourVersions">
+        <value>
+          <list size="2">
+            <item index="0" class="java.lang.String" itemvalue="3.9" />
+            <item index="1" class="java.lang.String" itemvalue="3.10" />
+          </list>
+        </value>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyDictCreationInspection" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="PyDocstringTypesInspection" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="PyGlobalUndefinedInspection" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="PyListCreationInspection" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="PyMethodMayBeStaticInspection" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="PyMethodParametersInspection" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="PyMissingOrEmptyDocstringInspection" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="PyMissingTypeHintsInspection" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="PyNoneFunctionAssignmentInspection" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="PyPackageRequirementsInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredPackages">
+        <value>
+          <list size="41">
+            <item index="0" class="java.lang.String" itemvalue="textract" />
+            <item index="1" class="java.lang.String" itemvalue="smmap" />
+            <item index="2" class="java.lang.String" itemvalue="blessings" />
+            <item index="3" class="java.lang.String" itemvalue="nltk" />
+            <item index="4" class="java.lang.String" itemvalue="more-itertools" />
+            <item index="5" class="java.lang.String" itemvalue="pluggy" />
+            <item index="6" class="java.lang.String" itemvalue="mypy-extensions" />
+            <item index="7" class="java.lang.String" itemvalue="py" />
+            <item index="8" class="java.lang.String" itemvalue="wcwidth" />
+            <item index="9" class="java.lang.String" itemvalue="pycodestyle" />
+            <item index="10" class="java.lang.String" itemvalue="gitdb" />
+            <item index="11" class="java.lang.String" itemvalue="python-editor" />
+            <item index="12" class="java.lang.String" itemvalue="markupsafe" />
+            <item index="13" class="java.lang.String" itemvalue="flake8" />
+            <item index="14" class="java.lang.String" itemvalue="parameterized" />
+            <item index="15" class="java.lang.String" itemvalue="mccabe" />
+            <item index="16" class="java.lang.String" itemvalue="zipp" />
+            <item index="17" class="java.lang.String" itemvalue="lxml" />
+            <item index="18" class="java.lang.String" itemvalue="entrypoints" />
+            <item index="19" class="java.lang.String" itemvalue="gitpython" />
+            <item index="20" class="java.lang.String" itemvalue="pyparsing" />
+            <item index="21" class="java.lang.String" itemvalue="fuzzywuzzy" />
+            <item index="22" class="java.lang.String" itemvalue="coverage" />
+            <item index="23" class="java.lang.String" itemvalue="nose" />
+            <item index="24" class="java.lang.String" itemvalue="inquirer" />
+            <item index="25" class="java.lang.String" itemvalue="six" />
+            <item index="26" class="java.lang.String" itemvalue="pyflakes" />
+            <item index="27" class="java.lang.String" itemvalue="pytest" />
+            <item index="28" class="java.lang.String" itemvalue="xlwt" />
+            <item index="29" class="java.lang.String" itemvalue="python-gnupg" />
+            <item index="30" class="java.lang.String" itemvalue="packaging" />
+            <item index="31" class="java.lang.String" itemvalue="xlsxwriter" />
+            <item index="32" class="java.lang.String" itemvalue="click" />
+            <item index="33" class="java.lang.String" itemvalue="attrs" />
+            <item index="34" class="java.lang.String" itemvalue="jinja2" />
+            <item index="35" class="java.lang.String" itemvalue="nosexcover" />
+            <item index="36" class="java.lang.String" itemvalue="typing" />
+            <item index="37" class="java.lang.String" itemvalue="mock" />
+            <item index="38" class="java.lang.String" itemvalue="multimap" />
+            <item index="39" class="java.lang.String" itemvalue="python-levenshtein" />
+            <item index="40" class="java.lang.String" itemvalue="readchar" />
+          </list>
+        </value>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyPep8Inspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredErrors">
+        <list>
+          <option value="PEP 8: whitespace before ':'" />
+          <option value="E125" />
+          <option value="E501" />
+          <option value="E203" />
+          <option value="E122" />
+          <option value="E129" />
+          <option value="E231" />
+        </list>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyPep8NamingInspection" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="PyRedundantParenthesesInspection" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="PyShadowingBuiltinsInspection" enabled="true" level="ERROR" enabled_by_default="true" />
+    <inspection_tool class="PyShadowingNamesInspection" enabled="true" level="ERROR" enabled_by_default="true" />
+    <inspection_tool class="PySimplifyBooleanCheckInspection" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="PySingleQuotedDocstringInspection" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="PyStatementEffectInspection" enabled="true" level="ERROR" enabled_by_default="true" />
+    <inspection_tool class="PyTupleItemAssignmentInspection" enabled="true" level="ERROR" enabled_by_default="true" />
+    <inspection_tool class="PyTypeCheckerInspection" enabled="true" level="ERROR" enabled_by_default="true" />
+    <inspection_tool class="PyUnboundLocalVariableInspection" enabled="true" level="ERROR" enabled_by_default="true" />
+    <inspection_tool class="PyUnnecessaryBackslashInspection" enabled="true" level="ERROR" enabled_by_default="true" />
+    <inspection_tool class="PyUnreachableCodeInspection" enabled="true" level="ERROR" enabled_by_default="true" />
+    <inspection_tool class="PyUnusedLocalInspection" enabled="true" level="ERROR" enabled_by_default="true" />
+    <inspection_tool class="SpellCheckingInspection" enabled="true" level="TYPO" enabled_by_default="true">
+      <scope name="Project Files" level="TYPO" enabled="true">
+        <option name="processCode" value="true" />
+        <option name="processLiterals" value="true" />
+        <option name="processComments" value="true" />
+      </scope>
+      <option name="processCode" value="true" />
+      <option name="processLiterals" value="true" />
+      <option name="processComments" value="true" />
+    </inspection_tool>
+  </profile>
+</component>

@@ -16,25 +16,20 @@ ENV COMMIT_SHORT=${COMMIT_SHORT}
 ENV BRANCH=${BRANCH}
 ENV TAG=${TAG}
 
-COPY sources.list /etc/apt/sources.list
+ENV PATH="${PATH}:/home/pdf-link-checker-user/.local/bin"
 
 RUN apt-get update -qq \
     && apt-get autoremove -y -qq \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
     && useradd --create-home --shell /bin/bash pdf-link-checker-user
+
 WORKDIR /home/pdf-link-checker-user
-
-COPY dist dist
-
-RUN chown pdf-link-checker-user dist
-
 USER pdf-link-checker-user
 
-RUN pip install --no-cache-dir --upgrade pip==21.3.1 \
-    && pip install --no-cache-dir dist/*.whl \
-    && rm -rf dist
+COPY --chown=pdf-link-checker-user dist dist
 
-ENV PATH="${PATH}:/home/pdf-link-checker-user/.local/bin"
-
-RUN pdf-link-checker --version
+RUN pip install -qq --no-cache-dir --upgrade pip==21.3.1 \
+    && pip install -qq --no-cache-dir dist/*.whl \
+    && rm -rf dist \
+    && pdf-link-checker --version
