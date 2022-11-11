@@ -1,8 +1,6 @@
 name: "Build Python package and Docker container."
 
 on:
-  push:
-    branches: ["main"]
   release:
     types: [published]
 
@@ -51,11 +49,18 @@ jobs:
         uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=sha
+            type=ref,event=tag
 
       - name: Build and push Docker image
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
           context: .
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: |
+            ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          build-args: |
+            TAG=${{ github.GITHUB_REF_NAME }}
+            COMMIT=$${ github.GITHUB_SHA }
