@@ -5,7 +5,7 @@ ARG COMMIT_SHORT=""
 ARG BRANCH=""
 ARG TAG=""
 
-LABEL author="Patrick Stöckle <patrick.stoeckle@tum.de>"
+LABEL author="Patrick Stöckle <patrick.stoeckle@posteo.de>"
 LABEL edu.tum.i4.pdf-link-checker.commit=${COMMIT}
 LABEL edu.tum.i4.pdf-link-checker.commit-short=${COMMIT_SHORT}
 LABEL edu.tum.i4.pdf-link-checker.branch=${BRANCH}
