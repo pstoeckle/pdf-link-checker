@@ -1,24 +1,23 @@
-# PDF Link Check
+# PDF Link Checker
 
-[[_TOC_]]
+*This is a fork of the [pdf-link-checker](https://github.com/mattbriggs/pdf-link-checker).*
 
-
-Stituation: You need to upload a PDF somewhere
+Situation: You need to upload a PDF somewhere
 
 -  a submission to [EasyChair](https://easychair.org/cfp/)
 - a preprint to [arxiv](https://arxiv.org/)
 - a slide deck to [moodle](https://www.moodle.tum.de/)
 
-Now, you want to check if all the links are still active and that a the reviewers, reader, or students end up with `404` error codes.
+Now, you want to check if all the links are still active and that the reviewers, reader, or students end up with `404` error codes.
 Let this script check that for you!
 
 ## Setup
 
 1. Install [Python](https://www.python.org/downloads/)
-2. Install the `pdf-link-checker` via the GitLab Python Package Registry.
+2. Install the `python-pdf-link-checker` via the Python Package Registry.
 
     ```bash
-    pip install pdf-link-checker --extra-index-url https://i4-student:zYyCuhx15tShf5EhRKyo@gitlab.lrz.de/api/v4/projects/102646/packages/pypi/simple
+    pip install python-pdf-link-checker
     ```
 
     **Attention**: On macOS, `pip` is usually the installer of the Python2 instance.
