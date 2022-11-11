@@ -10,6 +10,9 @@ maintainers = ["Patrick Stöckle <patrick.stoeckle@posteo.de>"]
 readme = "README.md"
 license = "MIT"
 repository = "https://github.com/pstoeckle/pdf-link-checker"
+packages = [
+    { include = "pdf_link_checker" }
+]
 
 [tool.poetry.dependencies]
 python = ">=3.7,<4.0"
