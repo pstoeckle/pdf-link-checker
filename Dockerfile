@@ -1,19 +1,13 @@
 FROM python:3.9-bullseye
 
 ARG COMMIT=""
-ARG COMMIT_SHORT=""
-ARG BRANCH=""
 ARG TAG=""
 
 LABEL author="Patrick Stöckle <patrick.stoeckle@posteo.de>"
 LABEL edu.tum.i4.pdf-link-checker.commit=${COMMIT}
-LABEL edu.tum.i4.pdf-link-checker.commit-short=${COMMIT_SHORT}
-LABEL edu.tum.i4.pdf-link-checker.branch=${BRANCH}
 LABEL edu.tum.i4.pdf-link-checker.tag=${TAG}
 
 ENV COMMIT=${COMMIT}
-ENV COMMIT_SHORT=${COMMIT_SHORT}
-ENV BRANCH=${BRANCH}
 ENV TAG=${TAG}
 
 ENV PATH="${PATH}:/home/pdf-link-checker-user/.local/bin"
