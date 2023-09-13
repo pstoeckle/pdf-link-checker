@@ -18,7 +18,7 @@ def test_get_split_small():
     """Function to split a number into four equal(ish) sections."""
     number_to_split = 10
     try:
-        split = plc.get_split(number_to_split)
+        _ = plc.get_split(number_to_split)
         out_stuff = "Success"
     except Exception as e:
         out_stuff = str(e)
@@ -30,10 +30,10 @@ def test_check_pdf_links_long():
     """Function to test crawl for a long PDF (under 13 pages)"""
     file_check = plc.check_pdf_links(Path("tests", "data", "testpdf.pdf"))
     data_check = Record(
-            page_no=3,
-            url="https://en.wikipedia.org/wiki/Fish",
-            code=200,
-            request_error="NA"
+        page_no=3,
+        url="https://en.wikipedia.org/wiki/Fish",
+        code=200,
+        request_error="NA",
     )
 
     assert data_check == file_check[0]
@@ -43,10 +43,10 @@ def test_check_pdf_links_short():
     """Function to test crawl for a short PDF (under 13 pages)"""
     file_check = plc.check_pdf_links(Path("tests", "data", "pdflink.pdf"))
     data_check = Record(
-            page_no=1,
-            url=" http://www.adobe.com/suportservice/devrelations/PDFS/TN5150.PDFMARK.PDF",
-            code=404,
-            request_error="NA"
+        page_no=1,
+        url=" http://www.adobe.com/suportservice/devrelations/PDFS/TN5150.PDFMARK.PDF",
+        code=404,
+        request_error="NA",
     )
 
     assert data_check == file_check[0]

@@ -4,8 +4,9 @@ TEst.
 from pathlib import Path
 from unittest import TestCase, main
 
-from pdf_link_checker.main import app
 from typer.testing import CliRunner
+
+from pdf_link_checker.main import app
 
 
 class PDFTest(TestCase):
