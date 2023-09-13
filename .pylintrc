@@ -1,0 +1,16 @@
+# SPDX-FileCopyrightText: 2023 Siemens AG, Patrick Stoeckle, and other contributors.
+# SPDX-License-Identifier: LicenseRef-Siemens-ISL-1.4
+
+[MESSAGES CONTROL]
+disable=
+    broad-exception-caught,
+    broad-exception-raised,
+    invalid-name,
+    missing-class-docstring,
+    missing-function-docstring,
+    raise-missing-from,
+    too-many-arguments,
+    too-many-locals
+
+[FORMAT]
+max-line-length=120

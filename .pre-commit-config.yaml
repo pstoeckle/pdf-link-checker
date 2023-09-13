@@ -1,0 +1,45 @@
+# SPDX-FileCopyrightText: 2023 Siemens AG, Patrick Stoeckle, and other contributors.
+# SPDX-License-Identifier: LicenseRef-Siemens-ISL-1.4
+repos:
+  - repo: https://github.com/PyCQA/flake8
+    rev: "6.0.0"
+    hooks:
+      - id: flake8
+  - repo: https://github.com/psf/black
+    rev: 22.3.0
+    hooks:
+      - id: black
+  - repo: https://github.com/PyCQA/isort.git
+    rev: 5.12.0
+    hooks:
+      - id: isort
+        args:
+          - "--profile"
+          - "black"
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: "v1.3.0"
+    hooks:
+      - id: mypy
+  - repo: https://github.com/PyCQA/pylint
+    rev: v2.17.4
+    hooks:
+      - id: pylint
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+      - id: check-case-conflict
+      - id: check-merge-conflict
+      - id: check-toml
+      - id: check-yaml
+      - id: debug-statements
+      - id: detect-private-key
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+  - repo: https://github.com/PyCQA/bandit
+    rev: 1.7.5
+    hooks:
+      - id: bandit
+  - repo: https://github.com/hadolint/hadolint
+    rev: v2.12.0
+    hooks:
+      - id: hadolint
