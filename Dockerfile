@@ -23,7 +23,12 @@ ENV PATH="/home/poetry-user/.local/bin:$PATH"
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-RUN ( curl -sSL https://install.python-poetry.org | python3 - --version 1.4.1) \
+RUN apt-get update -qq \
+    && apt-get install --no-install-recommends -qqy \
+    curl=7.74.0-1.3+deb11u7 \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists \
+    && ( curl -sSL https://install.python-poetry.org | python3 - --version 1.4.1) \
     && poetry --version \
     && poetry config virtualenvs.in-project true
 
