@@ -200,6 +200,7 @@ python-deploy:
 
 deploy-test-image:
   extends: .container-deploy
+  needs: []
   variables:
     DOCKERFILEPATH: .
     DESTINATION: ${CI_REGISTRY_IMAGE}/ci-image
