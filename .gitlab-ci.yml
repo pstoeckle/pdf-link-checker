@@ -190,7 +190,7 @@ python-package:
 python-deploy:
   cache: *python-cache
   image: *python-image
-  rules: *on_tag
+  rules: *on_tag_and_manual
   script:
     - poetry config repositories.lrz https://code.siemens.com/api/v4/projects/${CI_PROJECT_ID}/packages/pypi
     - poetry publish --repository lrz --username $CI_REGISTRY_USER --password $CI_REGISTRY_PASSWORD
