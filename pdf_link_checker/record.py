@@ -8,7 +8,7 @@ from typing import Union
 
 @dataclass(frozen=True)
 @total_ordering
-class Record(object):
+class Record:
     """
     Record.
     """

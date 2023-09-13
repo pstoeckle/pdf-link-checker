@@ -2,7 +2,6 @@
 Utils.
 """
 from click import echo, style
-
 from typer.colors import RED
 
 

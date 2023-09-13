@@ -8,13 +8,7 @@
 from logging import getLogger
 from pathlib import Path
 from threading import Thread
-from typing import (
-    List,
-    MutableSequence,
-    MutableSet,
-    Sequence,
-    Tuple, Union,
-)
+from typing import List, MutableSequence, MutableSet, Sequence, Tuple, Union
 
 from PyPDF2 import PdfFileReader
 from requests import get
@@ -68,7 +62,7 @@ def get_links_from_page(
     """
     checked_urls: MutableSet[str] = set()
 
-    for i in tqdm(range(indexstart, indexend)):
+    for i in tqdm(range(indexstart, indexend)):  # pylint: disable=R1702
         page_obj = pdf.getPage(i)
         page_no = i + 1
         try:
@@ -80,10 +74,10 @@ def get_links_from_page(
                     if "/URI" in uris:
                         raw_url: str = uris["/URI"]
                         if raw_url.strip().casefold().startswith("mailto:"):
-                            _LOGGER.info(f"Ignoring email address {raw_url}")
+                            _LOGGER.info("Ignoring email address %s", raw_url)
                             continue
                         if raw_url.strip().casefold() in checked_urls:
-                            _LOGGER.info(f"We already checked {raw_url}")
+                            _LOGGER.info("We already checked %s", raw_url)
                             continue
                         code: Union[str, int]
                         try:
@@ -95,7 +89,7 @@ def get_links_from_page(
                             error_echo(str(e))
                             code = "NA"
                             request_error = str(e)
-                        _LOGGER.info(f"{page_no} : {raw_url} : {code}")
+                        _LOGGER.info("%s : %s: %s", page_no, raw_url, code)
                         checked_urls.add(raw_url.strip().casefold())
                         reportlist.append(
                             Record(
@@ -106,7 +100,7 @@ def get_links_from_page(
                             )
                         )
         except KeyError:
-            _LOGGER.info(f"no annotations on page {page_no}")
+            _LOGGER.info("no annotations on page %s", page_no)
     return reportlist
 
 
